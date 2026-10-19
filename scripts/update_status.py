@@ -56,7 +56,7 @@ def get_status():
     plain = re.sub(r"<[^>]*>", " ", html)
     now = datetime.now(timezone.utc)
     dates = []
-    for month, day, year in re.findall(r"\\b(January|February|March|April|May|June|July|August|September|October|November|December)\\s+(\\d{1,2}),?\\s+(20\\d{2})\\b", plain, re.I):
+    for month, day, year in re.findall(r"\b(January|February|March|April|May|June|July|August|September|October|November|December)\s+(\d{1,2}),?\s+(20\d{2})\b", plain, re.I):
         try:
             dt = datetime.strptime(f"{month} {day} {year}", "%B %d %Y").replace(tzinfo=timezone.utc)
             if timedelta(days=-1) <= now - dt <= timedelta(days=2):

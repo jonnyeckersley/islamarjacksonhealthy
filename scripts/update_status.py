@@ -1,7 +1,7 @@
 
 import json
 import re
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
 from pathlib import Path
 from urllib.request import Request, urlopen
 from html.parser import HTMLParser
@@ -51,6 +51,22 @@ def get_status():
     with urlopen(req, timeout=25) as response:
         html = response.read().decode("utf-8", errors="replace")
 
+    # Conservative safeguard: the official page can retain last game's report.
+    # A recent date must be visible; otherwise return UNKNOWN.
+    plain = re.sub(r"<[^>]*>", " ", html)
+    now = datetime.now(timezone.utc)
+    dates = []
+    for month, day, year in re.findall(r"\\b(January|February|March|April|May|June|July|August|September|October|November|December)\\s+(\\d{1,2}),?\\s+(20\\d{2})\\b", plain, re.I):
+        try:
+            dt = datetime.strptime(f"{month} {day} {year}", "%B %d %Y").replace(tzinfo=timezone.utc)
+            if timedelta(days=-1) <= now - dt <= timedelta(days=2):
+                dates.append(dt)
+        except ValueError:
+            pass
+    if not dates:
+        raise ValueError("No recent dated injury report could be verified")
+    report_date = max(dates).date().isoformat()
+
     parser = TableReader()
     parser.feed(html)
 
@@ -94,6 +110,7 @@ def get_status():
                 "detail": detail,
                 "practice": latest,
                 "gameStatus": game,
+                "reportDate": report_date,
             }
 
     raise ValueError("Lamar Jackson not found in a verified injury table")
@@ -106,6 +123,7 @@ def main():
         "detail": "Unable to verify current injury information",
         "practice": None,
         "gameStatus": None,
+        "reportDate": None,
     }
 
     try:
@@ -113,6 +131,9 @@ def main():
     except Exception as error:
         print("Injury report unavailable:", error)
 
+    result["reason"] = result["detail"]
+    result["source_url"] = SOURCE
+    result["updated_at"] = datetime.now(timezone.utc).isoformat()
     result["source"] = SOURCE
     result["updatedAt"] = datetime.now(timezone.utc).isoformat()
     OUTPUT.write_text(json.dumps(result, indent=2) + "\n")

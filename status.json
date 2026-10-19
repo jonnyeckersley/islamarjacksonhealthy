@@ -1,6 +1,9 @@
 {
-  "status": "unknown",
-  "reason": "No verified current injury report has been entered yet.",
-  "updated_at": null,
-  "source_url": "https://www.baltimoreravens.com/team/injury-report/"
+  "status": "NO",
+  "injury": "Ankle",
+  "detail": "Game designation: Out",
+  "practice": "DNP",
+  "gameStatus": "OUT",
+  "source": "https://www.baltimoreravens.com/team/injury-report/index-app",
+  "updatedAt": "2026-10-19T17:08:58.691270+00:00"
 }

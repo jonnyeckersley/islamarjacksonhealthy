@@ -30,3 +30,7 @@ h1 em{display:inline-block;transform:skew(-5deg);-webkit-text-stroke:1px rgba(25
 .meter-track{height:8px;border:1px solid #a77a2c;background:#15091f;overflow:hidden;transform:skew(-12deg)}
 .meter-fill{height:100%;width:100%;background:repeating-linear-gradient(105deg,#c39631 0,#c39631 12px,#f4d46b 12px,#f4d46b 24px)}
 @media(max-width:600px){h1{font-size:clamp(70px,15.5vw,110px);margin:36px 0 30px}.answer{font-size:clamp(120px,25vw,180px)}.hero-kicker{gap:8px;letter-spacing:.07em}.fan-meter{grid-template-columns:1fr;gap:10px;text-align:center;padding:15px}.fan-meter span,.fan-meter strong{font-size:9px}.joke{font-size:9px;padding:0 8px}}
+
+/* Give the main question and live answer room to breathe */
+.hero h1{margin-bottom:72px}
+@media(max-width:600px){.hero h1{margin-bottom:56px}}

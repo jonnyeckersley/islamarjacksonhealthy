@@ -6,7 +6,7 @@ body{background:radial-gradient(ellipse at 50% 14%,#250b40 0%,#130720 39%,#09041
 .dot{box-shadow:0 0 0 4px rgba(212,175,55,.12)}
 h1 em{color:#e3bd4e;text-shadow:0 2px 30px rgba(212,175,55,.12)}
 .hero{position:relative}
-.hero:after{content:'';display:block;width:68px;height:3px;background:#d4af37;margin:48px auto 0}
+.hero:after{display:none}
 .game{border-top:2px solid #b48a2d}
 .timer>div{background:linear-gradient(160deg,#27103f,#160922);border:1px solid #8c682c;box-shadow:inset 0 1px 0 rgba(238,194,83,.08)}
 .timer strong{color:#f9f5fc}
